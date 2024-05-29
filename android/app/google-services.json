@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "788631705999",
+    "project_id": "orderli-7a370",
+    "storage_bucket": "orderli-7a370.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788631705999:android:6be4aad6e62e5921fe93fa",
+        "android_client_info": {
+          "package_name": "com.example.orderligui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPVdhTeec0Uk2hbR-ZIPdo0WRd78KLhyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
