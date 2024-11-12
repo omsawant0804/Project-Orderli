@@ -148,6 +148,7 @@ class _CustomerMenuPageState extends State<CustomerMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar:  PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
@@ -342,6 +343,158 @@ class _CustomerMenuPageState extends State<CustomerMenuPage> {
     );
   }
 
+  // void _showOrderSummaryBottomSheet(BuildContext context, double totalPrice) {
+  //   double totalAmount = totalPrice;
+  //   int selectedTable = 1;
+  //   String additionalNote = '';
+  //
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return StatefulBuilder(
+  //         builder: (BuildContext context, StateSetter setState) {
+  //           return SingleChildScrollView(
+  //             child: Container(
+  //               padding: EdgeInsets.all(20.0),
+  //               height: MediaQuery.of(context).size.height * 0.8, // Set a fixed height
+  //               child: Column(
+  //                 mainAxisSize: MainAxisSize.max,
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Text(
+  //                     'Order Summary',
+  //                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+  //                   ),
+  //                   SizedBox(height: 20),
+  //                   Expanded(
+  //                     child: SingleChildScrollView(
+  //                       child: Column(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //
+  //                         children: _selectedItems.entries.map((entry) {
+  //                           String itemName = entry.key;
+  //                           int count = entry.value;
+  //                           double price = _itemPrices[itemName]!;
+  //                           double itemTotal = count * price;
+  //
+  //                           return Column(
+  //                             crossAxisAlignment: CrossAxisAlignment.start,
+  //                             children: [
+  //                               Text('$itemName x $count'),
+  //                               Text('Price: ₹$price'),
+  //                               Text('Total: ₹${itemTotal.toStringAsFixed(2)}'),
+  //                               SizedBox(height: 10),
+  //                             ],
+  //                           );
+  //                         }).toList(),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Divider(),
+  //                   Text(
+  //                     'Total Amount: ₹${totalAmount.toStringAsFixed(2)}',
+  //                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  //                   ),
+  //                   SizedBox(height: 20),
+  //                   Text(
+  //                     'Select Table',
+  //                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  //                   ),
+  //                   SizedBox(height: 10),
+  //                   DropdownButton<int>(
+  //                     value: selectedTable,
+  //                     onChanged: (newValue) {
+  //                       setState(() {
+  //                         selectedTable = newValue!;
+  //                       });
+  //                     },
+  //                     items: List.generate(
+  //                       10,
+  //                           (index) => DropdownMenuItem<int>(
+  //                         value: index + 1,
+  //                         child: Text('Table ${index + 1}'),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   SizedBox(height: 20),
+  //                   TextField(
+  //                     onChanged: (value) {
+  //                       additionalNote = value;
+  //                     },
+  //                     decoration: InputDecoration(
+  //                       hintText: 'Additional Note (Optional)',
+  //                     ),
+  //                   ),
+  //                   SizedBox(height: 20),
+  //                   Center(
+  //                     child:             Row(
+  //                       mainAxisSize: MainAxisSize.max,
+  //                       mainAxisAlignment: MainAxisAlignment.center,
+  //                       children: [
+  //                         Material(
+  //                           color: Colors.transparent,
+  //                           // elevation: 2,
+  //                           shape: RoundedRectangleBorder(
+  //                             borderRadius: BorderRadius.circular(0),
+  //                           ),
+  //                           child: Container(
+  //                             width: 335,
+  //                             height: 52,
+  //                             decoration: BoxDecoration(
+  //                               boxShadow: [
+  //                                 BoxShadow(
+  //                                   blurRadius: 4,
+  //                                   color: Color(0x33000000),
+  //                                   offset: Offset(0, 2),
+  //                                 )
+  //                               ],
+  //                               gradient: LinearGradient(
+  //                                 colors: [Color(0xFFE86A42), Color(0xFFE86A42)],
+  //                                 stops: [0, 1],
+  //                                 begin: AlignmentDirectional(-1, 0.64),
+  //                                 end: AlignmentDirectional(1, -0.64),
+  //                               ),
+  //                               borderRadius: BorderRadius.circular(18),
+  //                             ),
+  //                             child: Padding(
+  //                               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+  //                               child: InkWell(
+  //                                 splashColor: Colors.transparent,
+  //                                 focusColor: Colors.transparent,
+  //                                 hoverColor: Colors.transparent,
+  //                                 highlightColor: Colors.transparent,
+  //                                 child: TextButton(
+  //                                   child: Text('Place Order',
+  //                                     textAlign: TextAlign.center,
+  //                                     style: TextStyle(
+  //                                       color: Colors.white,
+  //                                       fontSize: 20,
+  //                                       fontWeight: FontWeight.w600,
+  //                                     ),
+  //                                   ),
+  //                                   onPressed: ()async{
+  //                                     GetPlaceOrderData(context, selectedTable, additionalNote, totalAmount);
+  //                                     callBackendPay(totalAmount);
+  //                                     Navigator.pop(context);
+  //                                   },
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+
   void _showOrderSummaryBottomSheet(BuildContext context, double totalPrice) {
     double totalAmount = totalPrice;
     int selectedTable = 1;
@@ -349,140 +502,147 @@ class _CustomerMenuPageState extends State<CustomerMenuPage> {
 
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true, // Allow the bottom sheet to be scrollable
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(20.0),
-                height: MediaQuery.of(context).size.height * 0.8, // Set a fixed height
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Order Summary',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: _selectedItems.entries.map((entry) {
-                            String itemName = entry.key;
-                            int count = entry.value;
-                            double price = _itemPrices[itemName]!;
-                            double itemTotal = count * price;
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(20.0),
+                  height: MediaQuery.of(context).size.height * 0.8, // Set a fixed height
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Order Summary',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 20),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: _selectedItems.entries.map((entry) {
+                              String itemName = entry.key;
+                              int count = entry.value;
+                              double price = _itemPrices[itemName]!;
+                              double itemTotal = count * price;
 
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('$itemName x $count'),
-                                Text('Price: ₹$price'),
-                                Text('Total: ₹${itemTotal.toStringAsFixed(2)}'),
-                                SizedBox(height: 10),
-                              ],
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                    Divider(),
-                    Text(
-                      'Total Amount: ₹${totalAmount.toStringAsFixed(2)}',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Select Table',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    DropdownButton<int>(
-                      value: selectedTable,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedTable = newValue!;
-                        });
-                      },
-                      items: List.generate(
-                        10,
-                            (index) => DropdownMenuItem<int>(
-                          value: index + 1,
-                          child: Text('Table ${index + 1}'),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    TextField(
-                      onChanged: (value) {
-                        additionalNote = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Additional Note (Optional)',
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Center(
-                      child:             Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Material(
-                            color: Colors.transparent,
-                            // elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0),
-                            ),
-                            child: Container(
-                              width: 335,
-                              height: 52,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4,
-                                    color: Color(0x33000000),
-                                    offset: Offset(0, 2),
-                                  )
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('$itemName x $count'),
+                                  Text('Price: ₹$price'),
+                                  Text('Total: ₹${itemTotal.toStringAsFixed(2)}'),
+                                  SizedBox(height: 10),
                                 ],
-                                gradient: LinearGradient(
-                                  colors: [Color(0xFFE86A42), Color(0xFFE86A42)],
-                                  stops: [0, 1],
-                                  begin: AlignmentDirectional(-1, 0.64),
-                                  end: AlignmentDirectional(1, -0.64),
-                                ),
-                                borderRadius: BorderRadius.circular(18),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      Text(
+                        'Total Amount: ₹${totalAmount.toStringAsFixed(2)}',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Select Table',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      DropdownButton<int>(
+                        value: selectedTable,
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedTable = newValue!;
+                          });
+                        },
+                        items: List.generate(
+                          10,
+                              (index) => DropdownMenuItem<int>(
+                            value: index + 1,
+                            child: Text('Table ${index + 1}'),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        onChanged: (value) {
+                          additionalNote = value;
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Additional Note (Optional)',
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Center(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Material(
+                              color: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  child: TextButton(
-                                    child: Text('Place Order',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
+                              child: Container(
+                                width: 335,
+                                height: 52,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFFE86A42), Color(0xFFE86A42)],
+                                    stops: [0, 1],
+                                    begin: AlignmentDirectional(-1, 0.64),
+                                    end: AlignmentDirectional(1, -0.64),
+                                  ),
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    child: TextButton(
+                                      child: Text(
+                                        'Place Order',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
+                                      onPressed: () async {
+                                        GetPlaceOrderData(context, selectedTable, additionalNote, totalAmount);
+                                        callBackendPay(totalAmount);
+                                        Navigator.pop(context);
+                                      },
                                     ),
-                                    onPressed: ()async{
-                                      GetPlaceOrderData(context, selectedTable, additionalNote, totalAmount);
-                                      callBackendPay(totalAmount);
-                                      Navigator.pop(context);
-                                    },
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );
@@ -491,6 +651,7 @@ class _CustomerMenuPageState extends State<CustomerMenuPage> {
       },
     );
   }
+
 }
 
 class MenuItem {
